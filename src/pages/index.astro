@@ -1,0 +1,50 @@
+---
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+		<title>Astro</title>
+	</head>
+	<body>
+		<h1>Astro</h1>
+		<div id="message"></div>
+		<form id="connect">
+			<input name="connect" id="connet-peer" />
+			<button type="submit">Connect</button>
+		</form>
+	</body>
+</html>
+
+<script>
+	import {Peer} from "peerjs"
+
+	const peer = new Peer();
+
+	console.log(peer)
+
+	peer.on("connection", (conn) => {
+		conn.on("data", (data) => {
+			// Will print 'hi!'
+			console.log(data);
+		});
+		conn.on("open", () => {
+			conn.send("hello!");
+		});
+	});
+
+	document.querySelector("#connect")?.addEventListener("submit", (e) => {
+		e.preventDefault();
+		const peerId = (document.querySelector("#connet-peer") as HTMLInputElement).value;
+		console.log(peerId)
+		const conn = peer.connect(peerId);
+		conn.on("open", () => {
+			console.log("hi!")
+		});
+	});
+</script>
