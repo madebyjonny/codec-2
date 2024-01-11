@@ -49,6 +49,7 @@
 		const conn = peer.connect(peerId);
 		conn.on("open", () => {
 			conn.send("hirffff");
+			message.innerText = "hirffff";
 		});
 	});
 </script>
