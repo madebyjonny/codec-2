@@ -25,13 +25,17 @@
 	import {Peer} from "peerjs"
 
 	const peer = new Peer();
+	const message = document.querySelector("#message") as HTMLDivElement;
 
-	console.log(peer)
+	peer.on("open", (id) => {
+		console.log(id)
+	});
 
 	peer.on("connection", (conn) => {
 		conn.on("data", (data) => {
 			// Will print 'hi!'
-			console.log(data);
+			if(!message) return;
+			message.innerText = data as string;
 		});
 		conn.on("open", () => {
 			conn.send("hello!");
@@ -44,7 +48,7 @@
 		console.log(peerId)
 		const conn = peer.connect(peerId);
 		conn.on("open", () => {
-			console.log("hi!")
+			conn.send("hirffff");
 		});
 	});
 </script>
